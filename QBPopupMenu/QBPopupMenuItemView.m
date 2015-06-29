@@ -128,6 +128,10 @@
     // Title
     [self.button setTitle:self.item.title forState:UIControlStateNormal];
     
+    if (self.item.font) {
+        self.button.titleLabel.font = self.item.font;
+    }
+    
     // Image
     [self.button setImage:self.item.image forState:UIControlStateNormal];
     [self.button setImage:self.item.image forState:UIControlStateHighlighted];

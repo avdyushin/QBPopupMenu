@@ -16,11 +16,15 @@
 @property (nonatomic, copy, readonly) NSString *title;
 @property (nonatomic, copy, readonly) UIImage *image;
 
+@property (nonatomic, copy, readonly) UIFont *font;
+
 + (instancetype)itemWithTitle:(NSString *)title target:(id)target action:(SEL)action;
++ (instancetype)itemWithTitle:(NSString *)title font:(UIFont *)font target:(id)target action:(SEL)action;
 + (instancetype)itemWithImage:(UIImage *)image target:(id)target action:(SEL)action;
 + (instancetype)itemWithTitle:(NSString *)title image:(UIImage *)image target:(id)target action:(SEL)action;
 
 - (instancetype)initWithTitle:(NSString *)title target:(id)target action:(SEL)action;
+- (instancetype)initWithTitle:(NSString *)title font:(UIFont *)font target:(id)target action:(SEL)action;
 - (instancetype)initWithImage:(UIImage *)image target:(id)target action:(SEL)action;
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image target:(id)target action:(SEL)action;
 

@@ -16,6 +16,8 @@
 @property (nonatomic, copy, readwrite) NSString *title;
 @property (nonatomic, copy, readwrite) UIImage *image;
 
+@property (nonatomic, copy, readwrite) UIFont *font;
+
 @end
 
 @implementation QBPopupMenuItem
@@ -35,6 +37,11 @@
     return [[self alloc] initWithTitle:title image:image target:target action:action];
 }
 
++ (instancetype)itemWithTitle:(NSString *)title font:(UIFont *)font target:(id)target action:(SEL)action
+{
+    return [[self alloc] initWithTitle:title font:font target:target action:action];
+}
+
 - (instancetype)initWithTitle:(NSString *)title target:(id)target action:(SEL)action
 {
     return [self initWithTitle:title image:nil target:target action:action];
@@ -47,6 +54,16 @@
 
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image target:(id)target action:(SEL)action
 {
+    return [self initWithTitle:title image:image font:nil target:target action:action];
+}
+
+- (instancetype)initWithTitle:(NSString *)title font:(UIFont *)font target:(id)target action:(SEL)action
+{
+    return [self initWithTitle:title image:nil font:font target:target action:action];
+}
+
+- (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image font:(UIFont *)font target:(id)target action:(SEL)action
+{
     self = [super init];
     
     if (self) {
@@ -55,6 +72,8 @@
         
         self.title = title;
         self.image = image;
+        
+        self.font = font;
     }
     
     return self;

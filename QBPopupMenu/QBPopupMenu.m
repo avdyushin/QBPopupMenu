@@ -49,32 +49,45 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     return [[self alloc] initWithItems:items];
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setupDefaults];
+    }
+    return self;
+}
+
 - (instancetype)initWithItems:(NSArray *)items
 {
     self = [super initWithFrame:CGRectZero];
     
     if (self) {
-        // View settings
-        self.opaque = NO;
-        self.backgroundColor = [UIColor clearColor];
-        self.clipsToBounds = YES;
-        
-        // Property settings
+        [self setupDefaults];
         self.items = items;
-        self.height = 36;
-        self.cornerRadius = 8;
-        self.arrowSize = 9;
-        self.arrowDirection = QBPopupMenuArrowDirectionDefault;
-        self.popupMenuInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        self.margin = 2;
-        
-        self.color = [[UIColor blackColor] colorWithAlphaComponent:0.8];
-        self.highlightedColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.8];
     }
     
     return self;
 }
 
+- (void)setupDefaults
+{
+    // View settings
+    self.opaque = NO;
+    self.backgroundColor = [UIColor clearColor];
+    self.clipsToBounds = YES;
+    
+    // Property settings
+    self.height = 36;
+    self.cornerRadius = 8;
+    self.arrowSize = 9;
+    self.arrowDirection = QBPopupMenuArrowDirectionDefault;
+    self.popupMenuInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    self.margin = 2;
+    
+    self.color = [[UIColor blackColor] colorWithAlphaComponent:0.8];
+    self.highlightedColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.8];
+}
 
 #pragma mark - Accessors
 
@@ -171,11 +184,17 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     }
     
     // Show
-    [view addSubview:self.overlayView];
+    if (self.useOverlayView) {
+        [view addSubview:self.overlayView];
+    }
     
     if (animated) {
         self.alpha = 0;
-        [self.overlayView addSubview:self];
+        if (self.useOverlayView) {
+            [self.overlayView addSubview:self];
+        } else {
+            [self.view addSubview:self];
+        }
         
         [UIView animateWithDuration:kQBPopupMenuAnimationDuration animations:^(void) {
             self.alpha = 1.0;
@@ -188,7 +207,11 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
             }
         }];
     } else {
-        [self.overlayView addSubview:self];
+        if (self.useOverlayView) {
+            [self.overlayView addSubview:self];
+        } else {
+            [self.view addSubview:self];
+        }
         
         self.visible = YES;
         
