@@ -831,11 +831,12 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     } CGContextRestoreGState(context);
     
     // Separator
-    if (direction == QBPopupMenuArrowDirectionDown || direction == QBPopupMenuArrowDirectionUp) {
-        for (QBPopupMenuItemView *itemView in self.visibleItemViews) {
-            [self drawSeparatorInRect:CGRectMake(itemView.frame.origin.x + itemView.frame.size.width - 1, rect.origin.y, 1, rect.size.height)];
-        }
-    }
+    // Unuseful staff
+//    if (direction == QBPopupMenuArrowDirectionDown || direction == QBPopupMenuArrowDirectionUp) {
+//        for (QBPopupMenuItemView *itemView in self.visibleItemViews) {
+//            [self drawSeparatorInRect:CGRectMake(itemView.frame.origin.x + itemView.frame.size.width - 1, rect.origin.y, 1, rect.size.height)];
+//        }
+//    }
 }
 
 - (void)drawHeadInRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius highlighted:(BOOL)highlighted
@@ -900,7 +901,12 @@ static const NSTimeInterval kQBPopupMenuAnimationDuration = 0.2;
     
     // Separator
     CGContextSaveGState(context); {
-        CGContextClearRect(context, rect);
+        if (CGColorGetAlpha(self.separatorColor.CGColor) == 0) {
+            CGContextClearRect(context, rect);
+        } else {
+            CGContextSetFillColorWithColor(context, self.separatorColor.CGColor);
+            CGContextFillRect(context, rect);
+        }
     } CGContextRestoreGState(context);
 }
 

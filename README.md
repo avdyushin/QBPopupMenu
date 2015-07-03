@@ -9,6 +9,7 @@ Its appearance is similar to `UIMenuController` of iOS 7, and it has several new
 
 * Background overlay view is optiontal (`useOverlayView` property), now can use menu inside UIWebView/WKWebView
 * Font property added to menu item
+* Separator color property
 
 ## Screenshot
 ![screenshot01.png](screenshot01.png)
